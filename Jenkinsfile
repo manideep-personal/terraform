@@ -32,9 +32,6 @@ pipeline {
         stage('Plan') {
             steps {
                 sh 'pwd;cd terraform/terraform ; terraform init -input=false'
-                sh params.${ami_name}
-                sh params.${ami_id}
-                sh params.${ami_key_pair_name}
                 sh 'pwd;cd terraform/terraform ; terraform workspace new ${environment}'
                 sh 'pwd;cd terraform/terraform ; terraform workspace select ${environment}'
                 sh "pwd;cd terraform/terraform ;terraform plan -input=false -out tfplan "
