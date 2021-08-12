@@ -32,7 +32,6 @@ pipeline {
         stage('Plan') {
             steps {
                 sh 'pwd;cd terraform/terraform ; terraform init -input=false'
-                sh 'pwd;cd terraform/terraform ; terraform workspace new ${environment}'
                 sh 'pwd;cd terraform/terraform ;terraform show -no-color tfplan > tfplan.txt'
                 
             }
