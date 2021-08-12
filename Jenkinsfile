@@ -17,11 +17,13 @@ pipeline {
                 timestamps ()
                 ansiColor('xterm')
             }
+    stages{
      stage ('Checkout') {
        git branch: 'master',
        url: 'https://github.com/manideep-personal/terraform.git'
        mvnHome = tool 'M3'
          }
+    }
 
      stage ('Terraform Plan') {
       sh 'terraform init'
