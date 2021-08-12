@@ -28,37 +28,30 @@ pipeline {
                     }
                 }
             }
-
-        stage('Plan') {
-            steps {
-                sh 'pwd;cd terraform/aws-instance-first-script ; terraform init -input=false'
-                sh 'pwd;cd terraform/aws-instance-first-script ; terraform workspace new ${environment}'
-                sh 'pwd;cd terraform/aws-instance-first-script ; terraform workspace select ${environment}'
-                sh "pwd;cd terraform/aws-instance-first-script ;terraform plan -input=false -out tfplan "
-                sh 'pwd;cd terraform/aws-instance-first-script ;terraform show -no-color tfplan > tfplan.txt'
-            }
-        }
-        stage('Approval') {
-           when {
-               not {
-                   equals expected: true, actual: params.autoApprove
-               }
-           }
-
-           steps {
-               script {
-                    def plan = readFile 'terraform/aws-instance-first-script/tfplan.txt'
-                    input message: "Do you want to apply the plan?",
-                    parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-               }
-           }
-       }
-
-        stage('Apply') {
-            steps {
-                sh "pwd;cd terraform/aws-instance-first-script ; terraform apply -input=false tfplan"
-            }
-        }
     }
 
-  } 
+  stage ('Terraform Plan') {
+    sh 'terraform init'
+    sh 'terraform plan -no-color -out=create.tfplan'
+  }
+
+  stage ('Terraform Apply') {
+    sh 'terraform apply -no-color -auto-approve create.tfplan'
+  }
+
+  stage ('Post Run Tests') {
+    echo "Insert your infrastructure test of choice and/or application validation here."
+    sleep 2
+    sh 'terraform show'
+    sh 'cp terraform.tfstate /var/lib/jenkins/workspace/AWS-Terraform_destroy/terraform.tfstate'
+  }
+
+  stage ('Notification') {
+    echo "Sent mail notification"
+    mail from: "jenkins@mycompany.com",
+         to: "devopsteam@mycompany.com",
+         subject: "Terraform build complete",
+         body: "Jenkins job ${env.JOB_NAME} - build ${env.BUILD_NUMBER} complete"
+        
+  }
+}
