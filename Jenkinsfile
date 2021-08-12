@@ -30,9 +30,9 @@ pipeline {
             }
     }
 
-           stage ('Terraform Plan') {
-            sh 'terraform init'
-            sh 'terraform plan -no-color -out=create.tfplan'
+     stage ('Terraform Plan') {
+     sh 'terraform init'
+     sh 'terraform plan -no-color -out=create.tfplan'
           }
 
           stage ('Terraform Apply') {
@@ -46,12 +46,5 @@ pipeline {
             sh 'cp terraform.tfstate /var/lib/jenkins/workspace/AWS-Terraform_destroy/terraform.tfstate'
           }
 
-          stage ('Notification') {
-            echo "Sent mail notification"
-            mail from: "jenkins@mycompany.com",
-                 to: "devopsteam@mycompany.com",
-                 subject: "Terraform build complete",
-                 body: "Jenkins job ${env.JOB_NAME} - build ${env.BUILD_NUMBER} complete"
-
-          }
+ 
         }
