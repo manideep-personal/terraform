@@ -33,8 +33,6 @@ pipeline {
             steps {
                 sh 'pwd;cd terraform/terraform ; terraform init -input=false'
                 sh 'pwd;cd terraform/terraform ; terraform workspace new ${environment}'
-                sh 'pwd;cd terraform/terraform ; terraform workspace select ${environment}'
-                sh "pwd;cd terraform/terraform ;terraform plan -input=false -out tfplan "
                 sh 'pwd;cd terraform/terraform ;terraform show -no-color tfplan > tfplan.txt'
                 
             }
