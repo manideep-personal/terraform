@@ -31,19 +31,19 @@ pipeline {
     }
 
      stage ('Terraform Plan') {
-     sh 'terraform init'
-     sh 'terraform plan -no-color -out=create.tfplan'
+      sh 'terraform init'
+      sh 'terraform plan -no-color -out=create.tfplan'
           }
 
-          stage ('Terraform Apply') {
-            sh 'terraform apply -no-color -auto-approve create.tfplan'
+     stage ('Terraform Apply') {
+      sh 'terraform apply -no-color -auto-approve create.tfplan'
           }
 
-          stage ('Post Run Tests') {
-            echo "Insert your infrastructure test of choice and/or application validation here."
-            sleep 2
-            sh 'terraform show'
-            sh 'cp terraform.tfstate /var/lib/jenkins/workspace/AWS-Terraform_destroy/terraform.tfstate'
+     stage ('Post Run Tests') {
+      echo "Insert your infrastructure test of choice and/or application validation here."
+      sleep 2
+      sh 'terraform show'
+      sh 'cp terraform.tfstate /var/lib/jenkins/workspace/AWS-Terraform_destroy/terraform.tfstate'
           }
 
  
