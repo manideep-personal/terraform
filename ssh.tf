@@ -4,7 +4,7 @@ output "instance_ip" {
   value       = aws_instance.test-ec2-instance.public_ip
 }
 
-resource "aws_key_pair" "key" {
-  key_name   = "key"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfeR2EmD5mn7X9lrpt0lqgOAlRTvVDsFp8yFxYfX/QLZ4lQhG0AwfEPFz8xY3Rixxs7SQG+BhGfN1R1/FPJXFYhsN7kK1XYsM9D+6LqTGYgbiSqTwfcR3Pr9qQbPVy6NcsRien2RTkwm4pylWVj+2HS7bjRvcXc8f+DnV4ivPevs2qnxrklrbqdzbZfrSUtRuLL6w+NJfezrvbA01H10iCJ+rPRGY6l27Ag3eJ5PHd+/dqehBnCdwqzCPMih0+CB4fdJU8dfLlcKdmzD+i6+yzExmZykLOEHNvQHwfwX0Ts6zbPSPjYFErDO5T7GsMhM9pPbHbRFaxGsVmmKNshZpR sanjay@DESKTOP-I89FM8U"
+resource "aws_key_pair" "github" {
+  key_name   = "github"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDjvc+nzlG2d8+1y2aCfUagpdgYCwr4Ftxt7p9gEMrZN4USxxrUpHfaqsOke1tPjgYVnScSq1gCw80ubvX13ICcptJV7dyCgmp8FGnqlKce39w/Cehn0USjeDr9QZsGth6FDDYW3PTN7g81+9Rs/gIfHsb8TV6grvB2OUqyNkq9F4FlKwhhjWo0FlT9ptRbATD1zkzIoP3Jg4UDZKBpFJ8wDJxJtftaoyOYk+JE+g78Q0IiTHqfaucczbGTCIottvLG7jmPteYTso6wjykQpmJsJOMNrl7V23JC0gAIcimjd+xjQVXD32Ugm6YSdTTG8v/Wv/Js1iPLhj92lvnE5OmV sanjay@DESKTOP-I89FM8U"
 }
