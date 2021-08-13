@@ -31,11 +31,11 @@ pipeline {
 
         stage('Plan') {
             steps {
-                bat 'cd terraform/terraform ; terraform init -input=false'
-                bat 'cd terraform/terraform ; terraform workspace new ${environment}'
-                bat 'cd terraform/terraform ; terraform workspace select ${environment}'
-                bat "cd terraform/terraform ; terraform plan -input=false -out tfplan "
-                bat 'cd terraform/terraform ; aterraform show -no-color tfplan > tfplan.txt'
+                bat 'cd terraform ; terraform init -input=false'
+                bat 'cd terraform ; terraform workspace new ${environment}'
+                bat 'cd terraform ; terraform workspace select ${environment}'
+                bat "cd terraform ; terraform plan -input=false -out tfplan "
+                bat 'cd terraform ; aterraform show -no-color tfplan > tfplan.txt'
             }
         }
         stage('Approval') {
@@ -47,7 +47,7 @@ pipeline {
 
            steps {
                script {
-                    def plan = readFile 'terraform/terraform/tfplan.txt'
+                    def plan = readFile 'terraform/tfplan.txt'
                     input message: "Do you want to apply the plan?",
                     parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                }
@@ -56,7 +56,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                bat "cd terraform/terraform ; terraform apply -input=false tfplan"
+                bat "cd terraform ; terraform apply -input=false tfplan"
             }
         }
     }
