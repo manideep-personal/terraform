@@ -30,12 +30,11 @@ pipeline {
             }
 
         stage('Plan') {
-            steps {
-                bat 'cd terraform ; terraform init -input=false'
-                bat 'cd terraform ; terraform workspace new ${environment}'
-                bat 'cd terraform ; terraform workspace select ${environment}'
-                bat "cd terraform ; terraform plan -input=false -out tfplan "
-                bat 'cd terraform ; aterraform show -no-color tfplan > tfplan.txt'
+             steps {
+                bat "cd terraform"
+                bat "cd terraform && terraform init -input=false"
+                bat "cd terraform && terraform plan -input=false -out tfplan "
+                bat "cd terraform && terraform show -no-color tfplan > tfplan.txt"
             }
         }
         stage('Approval') {
