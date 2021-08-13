@@ -37,7 +37,7 @@ pipeline {
                 bat "cd terraform/terraform ; terraform plan -input=false -out tfplan "
                 bat 'cd terraform/terraform ; aterraform show -no-color tfplan > tfplan.txt'
             }
-       
+        }
         stage('Approval') {
            when {
                not {
@@ -60,7 +60,6 @@ pipeline {
             }
         }
     }
-
-  }
+ 
 }
       
